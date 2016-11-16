@@ -69,6 +69,48 @@ end
 -- insertSort(bubbleArr)
 -- printTab("after sort", bubbleArr)
 
+--[[
+快排
+]]
+local times = 0
+local Qsort
+Qsort = function(arr, low, high)
+	if low >= high then
+		return
+	end
+	local first = low
+	local last = high
+	local key = arr[first]
+	while first < last do
+		print("first = ", first, "last = ", last)
+		while (first < last and arr[last] >= key) do
+			last = last - 1
+		end
+		print("a[last] = ", arr[last])
+		local temp = arr[last]
+		arr[last] = key
+		arr[first] = temp
+		print(unpack(arr))
+		while (first < last and arr[first] <= key) do
+			first = first + 1
+		end
+		print(arr[first])
+		temp = arr[first]
+		arr[first] = key
+		arr[last] = temp
+	end
+
+	Qsort(arr, low, first)
+	Qsort(arr, first, high)
+	times = times + 1
+	print("times = ", times)
+end
+
+
+local arr = {6, 1, 3, 7, 4, 7, 4, 9}
+printTab("Qsort ...1", arr)
+Qsort(arr, 1, #arr)
+printTab("Qsort ...2", arr)
 
 --[[
 二分查找:
@@ -108,6 +150,8 @@ function bFind2(arr, value)
     local low = 1
     local high = #arr
     while low <= high do
+    	--[[注意这个地方会有小数取整，譬如low = 1, high = 2, 则mid为1，从而跳过了value与arr[2]的比较，
+    	但上面的判断可以允许low == high，则又将这个损失给补了回来]]
         mid = math.floor((low + high) / 2)
         -- print("\n low = ", low, " high = ", high, " mid = ", mid, " midV = ", arr[mid]) 
         if value == arr[mid] then
