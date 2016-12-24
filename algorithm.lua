@@ -1,3 +1,6 @@
+--[[
+一些常用算法的实现
+]]
 local bubbleArr = {13, 12, 10, 8, 21, 12, 55, 12, 55, 100}
 
 function printTab(Tag, arr)
